@@ -9,6 +9,13 @@ int square(int x) {
 
 int main() {
     ThreadPool pool(4);
+    std::cout << "Worker Threads: "
+          << pool.threadCount()
+          << std::endl;
+
+    std::cout << "Pending Tasks: "
+            << pool.pendingTasks()
+            << std::endl;
 
     auto f1 = pool.submit(square, 5);
     auto f2 = pool.submit(square, 10);

@@ -21,13 +21,16 @@ public:
     template<class F, class... Args>
     auto submit(F&& f, Args&&... args)
         -> std::future<typename std::invoke_result<F, Args...>::type>;
+    
+    size_t threadCount() const;
+    size_t pendingTasks();
 
 private:
     std::vector<std::thread> workers;
 
     std::queue<std::function<void()>> tasks;
 
-    std::mutex queueMutex;
+    mutable std::mutex queueMutex;
 
     std::condition_variable condition;
 

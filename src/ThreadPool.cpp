@@ -37,3 +37,11 @@ ThreadPool::~ThreadPool() {
     for(std::thread &worker : workers)
         worker.join();
 }
+
+size_t ThreadPool::threadCount() const {
+    return workers.size();
+}
+size_t ThreadPool::pendingTasks() {
+    std::lock_guard<std::mutex> lock(queueMutex);
+    return tasks.size();
+}
